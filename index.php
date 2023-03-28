@@ -7,11 +7,7 @@
     <link rel="stylesheet" type="text/css" href="styl.css">
     <title>Sklep</title>
    
-    <!-- <style>
- #btn{
-    margin-top: 10px;
-}
-    </style> -->
+  
 </head>
 <body>
     <div id="panel">
