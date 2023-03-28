@@ -10,13 +10,18 @@
   
 </head>
 <body>
+    <p>Logowanie</p>
+
     <div id="panel">
-        <form action="index.php" method="POST">
-            Nazwa uzytkownika: <br>
+        <form action="index.php" method="POST" id="form">
+            
+            <a>Nazwa uzytkownika: </a><br>
             <input type="text" name="login" id="login" > <br>
-            Haslo:<br>
+            <a>Haslo:</a><br>
             <input type="password" name="password" id="password"> <br>
-            <button type="submit" id="btn">Zaloguj</button>
+            <button type="submit" id="btn">Zaloguj</button> <br>
+            <a href="rejestracja.php" id="rejestracja">Rejestracja</a>
+            
         </form>
     </div>
     
