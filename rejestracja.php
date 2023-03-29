@@ -13,7 +13,7 @@
     <p>Rejestracja </p>
 
     <div id="panel">
-        <form action="login.php" method="POST" id="form">
+        <form action="index.php" method="POST" id="form">
             
             <a>Nazwa uzytkownika: </a><br>
             <input type="text" name="login" id="login" > <br>
@@ -26,6 +26,28 @@
             
         </form>
     </div>
+
+    <!-- <?php 
+        $conn = mysqli_connect("localhost","root","","logowanie");
+        
+        
+
+        if(isset($_POST['submit']))
+        {    
+            $login = $_POST['login'];
+            $email = $_POST['email'];
+            $pass = $_POST['password'];
+
+            $sql = "INSERT INTO `rejestracja` (`id`, `Uzytkownik`, `Haslo`, `Email`) VALUES (NULL,'$login','$pass','$email')";
+            
+            if (mysqli_query($conn, $sql)) {
+                echo "Uzytkownik zarejestrowany !";
+            } else {
+                echo "Error: " . $sql . ":-" . mysqli_error($conn);
+            }
+            mysqli_close($conn);
+        }
     
+    ?> -->
 </body>
 </html>
