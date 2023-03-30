@@ -16,38 +16,17 @@
         <form action="index.php" method="POST" id="form">
             
             <a>Nazwa uzytkownika: </a><br>
-            <input type="text" name="login" id="login" > <br>
+            <input type="text" name="login2" id="login" > <br>
             <a>Haslo:</a><br>
-            <input type="password" name="password" id="password"> <br>
+            <input type="password" name="password2" id="password"> <br>
             <a>Adres e-mail:</a><br>
-            <input type="text" name="email" id="email"> <br>
-            <button type="submit" id="btn">Zarejestruj się</button> 
+            <input type="email" name="email2" id="email"> <br>
+            <input type="submit" name="submit2" id="btn" value="Zarejestruj się">
             
             
         </form>
     </div>
 
-    <!-- <?php 
-        $conn = mysqli_connect("localhost","root","","logowanie");
-        
-        
-
-        if(isset($_POST['submit']))
-        {    
-            $login = $_POST['login'];
-            $email = $_POST['email'];
-            $pass = $_POST['password'];
-
-            $sql = "INSERT INTO `rejestracja` (`id`, `Uzytkownik`, `Haslo`, `Email`) VALUES (NULL,'$login','$pass','$email')";
-            
-            if (mysqli_query($conn, $sql)) {
-                echo "Uzytkownik zarejestrowany !";
-            } else {
-                echo "Error: " . $sql . ":-" . mysqli_error($conn);
-            }
-            mysqli_close($conn);
-        }
     
-    ?> -->
 </body>
 </html>

@@ -9,6 +9,14 @@
    
   
 </head>
+<?php  
+
+
+
+?>
+
+
+
 <body>
     <p>Logowanie</p>
 
@@ -16,16 +24,25 @@
         <form action="login.php" method="POST" id="form">
             
             <a>Nazwa uzytkownika: </a><br>
-            <input type="text" name="login" id="login" > <br>
+            <input type="text" name="login1" id="login" > <br>
             <a>Haslo:</a><br>
-            <input type="password" name="password" id="password"> <br>
-            <button type="submit" id="btn">Zaloguj</button> <br>
+            <input type="password" name="password1" id="password"> <br>
+            <input type="submit" name="submit1" id="btn" value="Zaloguj"> <br>
             <a href="rejestracja.php" id="rejestracja">Rejestracja</a>
             
         </form>
     </div>
     
+ <?php 
+
+ 
+ 
+ 
+ ?>
+
 
     
 </body>
 </html>
+
+<!-- INSERT INTO `rejestr` (`id`, `User`, `Pass`, `Email`) VALUES (NULL, 'Admin', 'Admin123', 'admin@wp.pl'); -->
