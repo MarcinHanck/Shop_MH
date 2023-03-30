@@ -15,9 +15,8 @@ session_start();
 <?php
 
  echo "<p>Witaj ".$_SESSION['user']."</p>";
-
+ echo "<a href='logout.php'>Wyloguj się</a>";
 ?>
-
 
 </body>
 </html>

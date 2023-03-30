@@ -22,15 +22,18 @@ $conn = @new mysqli($host,$db_user,$db_password,$db_name); //@ - wylacza pokazyw
             $ilu_userow = $result->num_rows;
             if($ilu_userow>0)
             {
+                $_SESSION['zalogowany'] = true;
+                
                 $wiersz = $result->fetch_assoc();
                 $_SESSION['user'] = $wiersz['User'];
 
+                unset($_SESSION['blad']);
                 $result->free_result();
-
                 header('Location:sklep.php');
                 
             }else{
-
+                $_SESSION['blad'] = '<span style="color:red">Błędny login lub hasło!</span>';
+                header('Location: index.php');
             }
         }
 

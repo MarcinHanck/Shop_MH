@@ -1,3 +1,13 @@
+<?php 
+    session_start();
+
+    if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+    {
+        header('Location: sklep.php');
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +19,6 @@
    
   
 </head>
-<?php  
-
-
-
-?>
-
-
-
 <body>
     <p>Logowanie</p>
 
@@ -27,20 +29,15 @@
             <input type="text" name="login1" id="login" > <br>
             <a>Haslo:</a><br>
             <input type="password" name="password1" id="password"> <br>
+            <?php 
+                if(isset($_SESSION['blad'])){echo $_SESSION['blad'];}
+                
+            ?>
             <input type="submit" name="submit1" id="btn" value="Zaloguj"> <br>
             <a href="rejestracja.php" id="rejestracja">Rejestracja</a>
             
         </form>
     </div>
-    
- <?php 
-
- 
- 
- 
- ?>
-
-
     
 </body>
 </html>

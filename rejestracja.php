@@ -22,8 +22,7 @@
             <a>Adres e-mail:</a><br>
             <input type="email" name="email2" id="email"> <br>
             <input type="submit" name="submit2" id="btn" value="Zarejestruj się">
-            
-            
+             
         </form>
     </div>
 
