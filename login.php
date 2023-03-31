@@ -22,21 +22,29 @@ $conn = @new mysqli($host,$db_user,$db_password,$db_name); //@ - wylacza pokazyw
         $haslo = $_POST['password1'];
 
         $login = htmlentities($login, ENT_QUOTES, "UTF-8");
-        $haslo = htmlentities($haslo, ENT_QUOTES, "UTF-8");  
+         
 
-        if($result = @$conn->query(sprintf("SELECT * FROM rejestr  WHERE User = '%s' AND Pass = '%s'", mysqli_real_escape_string($conn,$login),mysqli_real_escape_string($conn,$haslo))))
+        if($result = @$conn->query(sprintf("SELECT * FROM rejestr  WHERE User = '%s'", mysqli_real_escape_string($conn,$login))))
         {
             $ilu_userow = $result->num_rows;
             if($ilu_userow>0)
             {
-                $_SESSION['zalogowany'] = true;
-
                 $wiersz = $result->fetch_assoc();
-                $_SESSION['user'] = $wiersz['User'];
 
-                unset($_SESSION['blad']);
-                $result->free_result();
-                header('Location:sklep.php');
+                if(password_verify($haslo, $wiersz['Pass']))
+                {
+                    $_SESSION['zalogowany'] = true;
+
+                    
+                    $_SESSION['user'] = $wiersz['User'];
+
+                    unset($_SESSION['blad']);
+                    $result->free_result();
+                    header('Location:sklep.php');
+                }else{
+                    $_SESSION['blad'] = '<span style="color:red">Błędny login lub hasło!</span>';
+                    header('Location: index.php');
+                }
                 
             }else{
                 $_SESSION['blad'] = '<span style="color:red">Błędny login lub hasło!</span>';
