@@ -20,7 +20,7 @@ if(!isset($_SESSION['zalogowany']))
 
 <?php
 
- echo "<p>Witaj ".$_SESSION['user']."</p>";
+ echo "<p>Witaj ".$_SESSION['User']."</p>";
  echo "<a href='logout.php'>Wyloguj się</a>";
 ?>
 

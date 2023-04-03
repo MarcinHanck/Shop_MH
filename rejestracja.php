@@ -1,12 +1,12 @@
 <?php 
     session_start();
 
-    if(isset($_POST['email2']))
+    if(isset($_POST['email']))
     {
         
         $wszytko_ok=true;
 
-        $login = $_POST['login2'];
+        $login = $_POST['login'];
 
         if(strlen($login)<3 || (strlen($login)>20))
         {
@@ -21,7 +21,7 @@
         }
 
 
-        $email = $_POST['email2'];
+        $email = $_POST['email'];
         $emailB = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         if((filter_var($emailB, FILTER_VALIDATE_EMAIL)==false) || ($emailB!=$email))
@@ -31,8 +31,8 @@
         }
 
 
-        $haslo1 = $_POST['password2'];
-        $haslo2 = $_POST['password3'];
+        $haslo1 = $_POST['password1'];
+        $haslo2 = $_POST['password2'];
 
         if(strlen($haslo1)<6 || (strlen($haslo1)>20))
         {
@@ -48,10 +48,68 @@
         
         $haslo_hash = password_hash($haslo1, PASSWORD_DEFAULT);
 
-        if($wszytko_ok == true)
+
+        require_once "connect.php";
+        mysqli_report(MYSQLI_REPORT_STRICT);
+        try 
         {
-            echo '123'; exit();
+            $conn = new mysqli($host,$db_user,$db_password,$db_name);
+            if($conn->connect_errno!=0)
+                {
+                    throw new Exception(mysqli_connect_errno());
+                }
+                else
+                {
+
+                    //Czy email juz istnieje?
+                    $result = $conn->query("SELECT id FROM rejestr Where Email='$email'");
+
+                    if(!$result) throw new Exception($conn->error);
+                    
+                    $ile_takich_maili = $result->num_rows;
+                    if($ile_takich_maili>0)
+                    {
+                        $wszytko_ok=false;
+                        $_SESSION['error_email'] = "Istnieje juz konto z takim e-mailem";
+                    }
+
+                    //Czy login juz istnieje?
+                    $result = $conn->query("SELECT id FROM rejestr Where User='$login'");
+
+                    if(!$result) throw new Exception($conn->error);
+                    
+                    $ile_takich_loginow = $result->num_rows;
+                    if($ile_takich_loginow>0)
+                    {
+                        $wszytko_ok=false;
+                        $_SESSION['error_login'] = "Istnieje juz konto z takim loginem";
+                    }
+
+                    if($wszytko_ok == true)
+                    {
+                        if($conn->query("INSERT INTO rejestr VALUES (NULL,'$login','$haslo_hash','$email')"))
+                        {
+                            $_SESSION['Udanarejestracja']=true;
+                            header('Location: witamy.php');
+                        }
+                        else
+                        {
+                            throw new Exception($conn->error);
+                        }
+                    }
+                    
+
+                    $conn->close();
+                }
         }
+        catch(Exception $e)
+        {
+            echo "<span style='color:red'>Blad serwera</span>";
+            echo "<br/> Informacja: ".$e;
+        }
+
+
+        
     }
 ?>
 
@@ -74,7 +132,7 @@
         <form method="POST" id="form">
             
             <a>Nazwa uzytkownika: </a><br>
-            <input type="text" name="login2" id="login" > <br>
+            <input type="text" name="login" id="login" > <br>
 
             <?php 
                 if(isset($_SESSION['error_login']))
@@ -85,7 +143,7 @@
             ?>
 
             <a>Haslo:</a><br>
-            <input type="password" name="password2" id="password"> <br>
+            <input type="password" name="password1" id="password"> <br>
 
             <?php 
                 if(isset($_SESSION['error_haslo']))
@@ -96,9 +154,9 @@
             ?>
 
             <a>Powtorz haslo:</a><br>
-            <input type="password" name="password3" id="password"> <br>
+            <input type="password" name="password2" id="password"> <br>
             <a>Adres e-mail:</a><br>
-            <input type="email" name="email2" id="email"> <br>
+            <input type="email" name="email" id="email"> <br>
 
             <?php 
                 if(isset($_SESSION['error_email']))
@@ -116,3 +174,4 @@
     
 </body>
 </html>
+

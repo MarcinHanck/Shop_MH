@@ -1,10 +1,14 @@
 <?php 
     session_start();
 
-    if(isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany']==true))
+    if(isset($_SESSION['Udanarejestracja']) )
     {
-        header('Location: sklep.php');
+        header('Location: index.php');
         exit();
+    }
+    else
+    {
+        unset($_SESSION['Udanarejestracja']);
     }
 ?>
 
@@ -20,20 +24,13 @@
   
 </head>
 <body>
-    <p>Logowanie</p>
+    <p>Uzytkownik zarejestrowany</p>
 
     <div id="panel">
         <form action="login.php" method="POST" id="form">
             
-            <a>Nazwa uzytkownika: </a><br>
-            <input type="text" name="login" id="login" > <br>
-            <a>Haslo:</a><br>
-            <input type="password" name="password" id="password"> <br>
-            <?php 
-                if(isset($_SESSION['blad'])) echo $_SESSION['blad'];
-            ?>
-            <input type="submit" name="submit" id="btn" value="Zaloguj"> <br>
-            <a href="rejestracja.php" id="rejestracja">Rejestracja</a>
+    
+            <a href="index.php" id="rejestracja">Zaloguj sie</a>
             
         </form>
     </div>
