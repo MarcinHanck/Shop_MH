@@ -20,8 +20,8 @@
         {
             $login = $_POST['login'];
             $haslo = $_POST['password'];
-
             $login = htmlentities($login, ENT_QUOTES, "UTF-8");
+            
             
 
             if($result = @$conn->query(sprintf("SELECT * FROM rejestr  WHERE User = '%s'",
@@ -37,6 +37,16 @@
                         $_SESSION['zalogowany'] = true;
 
                         $_SESSION['User'] = $wiersz['User'];
+                        
+                        if($wiersz['User'] == 'Admin'){                                        
+                            unset($_SESSION['blad']);                                          
+                            $result->free_result();
+                            header('Location:Admin.php');
+                        }elseif($wiersz['User'] == $login){
+                            unset($_SESSION['blad']);
+                            $result->free_result();
+                            header('Location:sklep.php');
+                        }
 
                         unset($_SESSION['blad']);
                         $result->free_result();
