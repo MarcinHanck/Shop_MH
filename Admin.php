@@ -19,7 +19,6 @@ if(!isset($_SESSION['zalogowany']))
 <body>
 <h1>Witaj na stronie Admina</h1>
 <?php
-
  echo "<p>Witaj ".$_SESSION['User']."</p>";
  echo "<a href='logout.php'>Wyloguj się</a>";
 ?>
