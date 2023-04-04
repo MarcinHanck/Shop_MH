@@ -33,6 +33,9 @@
                 if(isset($_SESSION['blad'])) echo $_SESSION['blad'];
             ?>
             <input type="submit" name="submit" id="btn" value="Zaloguj"> <br>
+            <?php 
+                if(isset($_SESSION['zarejestrowany'])) echo $_SESSION['zarejestrowany'];
+            ?>
             <a href="rejestracja.php" id="rejestracja">Rejestracja</a>
             
         </form>

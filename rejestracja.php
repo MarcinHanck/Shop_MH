@@ -17,7 +17,7 @@
         if(ctype_alnum($login)==false)
         {
             $wszytko_ok =false;
-            $_SESSION['error_login']= "Login moze skladac sie tylko z liter i cyfr (bez poslkich znakow)";
+            $_SESSION['error_login']= "Login moze skladac sie tylko z liter i cyfr (bez polskich znakow)";
         }
 
 
@@ -89,8 +89,8 @@
                     {
                         if($conn->query("INSERT INTO rejestr VALUES (NULL,'$login','$haslo_hash','$email')"))
                         {
-                            $_SESSION['Udanarejestracja']=true;
-                            header('Location: witamy.php');
+                            $_SESSION['zarejestrowany']='<span style="color:lightgreen">Uzytkownik zarejestrowany</span>';
+                            header('Location: index.php');
                         }
                         else
                         {
@@ -166,7 +166,7 @@
                 }             
             ?>
 
-            <input type="submit" name="submit2" id="btn" value="Zarejestruj się">
+            <input type="submit" name="submit" id="btn" value="Zarejestruj się">
              
         </form>
     </div>
