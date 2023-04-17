@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styl-index.css" type="text/css" >
+    <link rel="stylesheet" href="style.css" type="text/css" >
     <title>Sklep</title>
    
   
@@ -32,7 +32,7 @@
             <?php 
                 if(isset($_SESSION['blad'])) echo $_SESSION['blad'];
             ?>
-            <input type="submit" name="submit" id="btn" value="Zaloguj"> <br>
+            <input type="submit" name="submit" class="btn" value="Zaloguj"> <br>
             <?php 
                 if(isset($_SESSION['zarejestrowany'])) echo $_SESSION['zarejestrowany'];
             ?>

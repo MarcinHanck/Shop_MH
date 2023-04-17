@@ -13,28 +13,29 @@ require_once "connect.php";
 $conn = new mysqli($host,$db_user,$db_password,$db_name);
             
 
- if (isset($_POST["name"]) && isset($_POST["price"]) && isset($_POST["comment"])){
+ if (isset($_POST["add_product"])){
         $nazwa=$_POST['name'];
         $cena = $_POST['price'];
-        $opis = $_POST['comment'];
+        //$zdj = $_FILES['image'];
+        if($_FILES['image']['error'] === 4){
+            echo "<script> alert('Image Does Not Exist');</script>";
+        }else{
+            $zdj = $_FILES['image']['name'];
+
+        }
+        
     }
 
-
-
-            
+          
 if($conn->connect_errno!=0)
         {
             echo "Error: ".$conn->connect_errno;
         }
         else
         {
-            if(empty($nazwa) || empty($cena) || empty($opis))
+            if (isset($nazwa) && isset($cena) && isset($zdj))
             {
-                $_SESSION['error'] = "Nie podano wszystkich danych produktu"; 
-            }
-            else if (isset($nazwa) && isset($cena) && isset($opis))
-            {
-                $sql = "INSERT INTO produkt(`id`, `Nazwa`, `Cena`, `Opis`) VALUES (NULL,'$nazwa','$cena','$opis')";
+                $sql = "INSERT INTO produkt(`id`, `Nazwa`, `Cena`, `Zdjecie`) VALUES (NULL,'$nazwa','$cena','$zdj')";
 
                 $result = mysqli_query($conn, $sql);
                 $_SESSION['success'] = "Produkt został dodany do bazy";
@@ -45,6 +46,10 @@ if($conn->connect_errno!=0)
         }
 
 // -----------------------------
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +58,7 @@ if($conn->connect_errno!=0)
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styl-Admin.css" type="text/css" >
+    <link rel="stylesheet" href="style.css" type="text/css" >
     <title>Sklep - Admin</title>
 </head>
 <body>
@@ -63,22 +68,13 @@ if($conn->connect_errno!=0)
 ?>
 
     <p id="panel_admin">Panel administratora</p>
-<form method="POST" id="panel1">
-                <div class="row">
-				<label>Nazwa produktu: </label><input type="text" name="name"></br></br>
-                </div>
-                <div class="row">
-				<label>Cena produktu: </label><input type="float" name="price"></br></br>
-                </div>
-                <div class="row">
-				<label>Opis produktu: </label><textarea name="comment" rows='4' cols='23'></textarea></br></br>
-				</div>
-                <?php 
-                if(isset($_SESSION['error']))
-                {
-                    echo '<div class="blad">'.$_SESSION['error'].'</div><br>';
-                    unset($_SESSION['error']);
-                }  
+<form method="POST" id="panel1" enctype="multipart/form-data">
+            
+            <input type="text" name="name" placeholder="enter the product name" class="box" required><br>
+            <input type="number" name="price" min="0" placeholder="enter the product price" class="box" required><br>
+            <input type="file" name="image" accept=".png, .jpg, .jpeg" class="box" required><br>
+                
+                <?php  
                 if(isset($_SESSION['success']))
                 {
                     echo '<div class="blad">'.$_SESSION['success'].'</div><br>';
@@ -86,15 +82,49 @@ if($conn->connect_errno!=0)
                 }           
             ?>
 				<input type="reset" name="czysc" class="btn" value="Reset">
-				<input type="submit" name="wyslij" class="btn" value="Dodaj">
+				<input type="submit" value="Dodaj produkt" name="add_product" class="btn">
 				<br />
 </form>
 
-<p id="lista">Lista zamowien</p>
-<div id="panel2">
-<?php 
 
-?>
+<div id="panel2">
+<p >Produkty w sklepie</p>
+
+<section class="tabela">
+
+   <table>
+
+      <thead>
+         <th>Zdjecie</th>
+         <th>Nazwa</th>
+         <th>Cena</th>
+      </thead>
+
+      <tbody>
+         <?php
+            require_once "connect.php";
+            $conn = new mysqli($host,$db_user,$db_password,$db_name);
+            $select_products = mysqli_query($conn, "SELECT * FROM `produkt`");
+            if(mysqli_num_rows($select_products) > 0){
+               while($row = mysqli_fetch_assoc($select_products)){
+         ?>
+
+         <tr>
+            <td><img src="uploaded_img/<?php echo $row['Zdjecie']; ?>" height="100" alt=""></td>
+            <td><?php echo $row['Nazwa']; ?></td>
+            <td>$<?php echo $row['Cena']; ?>/-</td>
+         </tr>
+
+         <?php
+            };    
+            }else{
+               echo "<div class='empty'>no product added</div>";
+            };
+         ?>
+      </tbody>
+   </table>
+
+</section>
 
 </div>
 
