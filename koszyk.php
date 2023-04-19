@@ -33,14 +33,13 @@ if(isset($_GET['delete_all'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Koszyk</title>
 </head>
 <body>
 
 <section class="shopping-cart">
 
-   <h1 class="heading">shopping cart</h1>
+   <h1 class="heading">Podsumowanie koszyka</h1>
 
    <table>
 
@@ -50,7 +49,7 @@ if(isset($_GET['delete_all'])){
          <th>Cena</th>
          <th>Ilosc</th>
          <th>Cena za wszytsko</th>
-         <th>action</th>
+         <th>Usuwanie</th>
       </thead>
 
       <tbody>
@@ -75,7 +74,7 @@ if(isset($_GET['delete_all'])){
                </form>   
             </td>
             <td><?php echo $sub_total = number_format($fetch_cart['Cena'] * $fetch_cart['Ilosc']); ?>zł /-</td>
-            <td><a href="koszyk.php?remove=<?php echo $fetch_cart['id']; ?>" onclick="return confirm('remove item from cart?')" class="delete-btn"> <i class="fas fa-trash"></i> Usun</a></td>
+            <td><a href="koszyk.php?remove=<?php echo $fetch_cart['id']; ?>" onclick="return confirm('Usunać produkt z koszyka?')" class="delete-btn"> <i class="fas fa-trash"></i> Usun</a></td>
          </tr>
          <?php
            $grand_total += $sub_total;  
@@ -86,7 +85,7 @@ if(isset($_GET['delete_all'])){
             <td><a href="sklep.php" class="option-btn" style="margin-top: 0;">Kontynuuj zakupy</a></td>
             <td colspan="3">grand total</td>
             <td><?php echo $grand_total; ?>zł /-</td>
-            <td><a href="koszyk.php?delete_all" onclick="return confirm('are you sure you want to delete all?');" class="delete-btn"> <i class="fas fa-trash"></i> Usun wszytsko </a></td>
+            <td><a href="koszyk.php?delete_all" onclick="return confirm('Na pewno usunąć wszystkie produkty?');" class="delete-btn"> Usun wszytsko </a></td>
          </tr>
 
       </tbody>
@@ -94,18 +93,11 @@ if(isset($_GET['delete_all'])){
    </table>
 
    <div class="checkout-btn">
-      <a href="kasa.php" class="btn <?= ($grand_total > 1)?'':'disabled'; ?>">Przejdz do kasy</a>
-      <button onclick="openWin()">Podsumowanie</button>
+      <a href="kasa.php" class="btn <?php ($grand_total > 1)?'':'disabled'; ?>">Przejdz do kasy</a>
    </div>
 
 </section>
 
-<script>
-        let myWindow;
 
-        function openWin(){
-            myWindow = window.open("kasa.php", "", "width=600, height=400");
-        }
-    </script>
 </body>
 </html>
