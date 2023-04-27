@@ -23,10 +23,10 @@ if(isset($_POST['add_to_cart'])){
    $select_cart = mysqli_query($conn, "SELECT * FROM `koszyk` WHERE Nazwa = '$product_name'");
 
    if(mysqli_num_rows($select_cart) > 0){
-      $message[] = 'produkt juz jest w koszyku';
+      $message[] = 'Produkt juz jest w koszyku';
    }else{
       $insert_product = mysqli_query($conn, "INSERT INTO `koszyk`(Nazwa, Cena, Zdjecie, Ilosc) VALUES('$product_name', '$product_price', '$product_image', '$product_quantity')");
-      $message[] = 'produkt dodany do koszyka';
+      $message[] = 'Produkt dodany do koszyka';
    }
 
 }
@@ -46,6 +46,7 @@ if(isset($_POST['add_to_cart'])){
     margin: 0;
     padding: 0;
     font-family:sans-serif;
+    
 }
 section{
    
@@ -54,6 +55,7 @@ section{
    background: url(tlo3.jpg)no-repeat;
    background-position: center;
    background-size: cover;
+   
  } 
 
 a{
@@ -73,10 +75,10 @@ a:hover{
 }
 
 .btn{
-    width: 130px;
-    height: 20px;
-    border-radius: 20px;
-    background: #fff;
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    background: #00ffbf;
     border: none;
     outline: none;
     cursor: pointer;
@@ -87,7 +89,7 @@ a:hover{
 
 .koszyk{
    float:right;
-   padding: 7px;
+   
    
 }
 ion-icon{
@@ -96,7 +98,66 @@ ion-icon{
   top: 7px;
   right: 3px;
 }
- 
+
+.naglowek{
+   display: flex;
+    justify-content: center;
+    
+}
+h2{
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    position: relative;
+    left: 100px;
+ }
+
+ h3{
+   color: white;
+ }
+
+ .products .box-container{
+   display: grid;
+   grid-template-columns: repeat(auto-fit, 35rem);
+   gap:1.5rem;
+   justify-content: center;
+}
+
+.products .box-container .box{
+   text-align: center;
+   padding:2rem;
+   box-shadow:0 .5rem 1rem rgba(0,0,0,.1);
+   border:.2rem solid #00ffbf;
+   border-radius: 1.5rem;
+}
+
+.products .box-container .box img{
+   height: 15rem;
+}
+
+.products .box-container .box h3{
+   margin:1rem 0;
+   font-size: 2.3rem;
+   color:white;
+}
+
+.products .box-container .box .price{
+   font-size: 1.5rem;
+   color:white;
+}
+
+.products{
+   margin-top: 2rem;
+}
+
+p{
+   display: flex;
+   justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    font-size: 1.3rem;
+    color: #00ffbf;
+}
 </style>
 
 </head>
@@ -107,25 +168,28 @@ ion-icon{
       
       <a href="koszyk.php"><ion-icon name="cart-outline"></ion-icon>Przejdz do koszyka</a>
    </div>
-
+   <div class="logout">
       <?php
-      echo "<a href='logout.php' class='a'>Wyloguj się</a><br>";
-      echo "<p>Witaj ".$_SESSION['User']." w naszym sklepie</p>";
+         echo "<a href='logout.php' class='a'>Wyloguj się</a><br>";
+      ?>
+   </div>
+   <div class="naglowek">
+      <?php
+      
+      echo "<h2>Witaj ".$_SESSION['User']." w naszym sklepie</h2>";
       
       ?>
+</div>
+<?php
 
+if(isset($message)){
+   foreach($message as $message){
+      echo '<p>'.$message.'</p>';
+   };
+};
 
-      <?php
-
-      if(isset($message)){
-         foreach($message as $message){
-            echo '<br><span>'.$message.'</span>';
-         };
-      };
-
-      ?>
-
-
+?>
+<section class="products">
          <div class="box-container">
 
             <?php
@@ -153,7 +217,7 @@ ion-icon{
             ?>
 
          </div>
-
+</section>
          
 </section>
 
